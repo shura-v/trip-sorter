@@ -16,7 +16,7 @@ interface ITripTableProps {
 
 interface ITripTableState {
     fetching: boolean;
-    trip: ITrip;
+    trip: ITrip | undefined;
     currency: string;
 }
 
@@ -39,33 +39,37 @@ export class TripTable extends React.Component<ITripTableProps, ITripTableState>
     }
 
     public render(): JSX.Element {
-        if (!this.state || this.state.fetching) {
+        if (this.ifNotReady()) {
             return (
                 <div className="progress">
                     <div className="progress-bar progress-bar-striped active" style={{width: '100%'}}/>
                 </div>
             );
         }
+
         const {trip} = this.state;
+
+        if (trip === undefined) {
+            return (
+                <div className="alert alert-danger">Sorry, nothing found, try again.</div>
+            );
+        }
+
         const deals = this.dealsToJsx(trip.getDeals());
 
         return (
             <div>
                 {
-                    deals.length === 0
-                        ? <div className="alert alert-danger">Sorry, nothing found, try again.</div>
-                        : (
-                        <table className="table">
-                            <tbody>{deals}</tbody>
-                            <tfoot>
-                            <tr className="active">
-                                <td><b>Total</b>: {formatDuration(trip.getDurationInMinutes())}</td>
-                                <td className="text-right">
-                                    <b>{currencyToSymbol(this.state.currency)}{trip.getFinalCost()}</b></td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    )
+                    <table className="table">
+                        <tbody>{deals}</tbody>
+                        <tfoot>
+                        <tr className="active">
+                            <td><b>Total</b>: {formatDuration(trip.getDurationInMinutes())}</td>
+                            <td className="text-right">
+                                <b>{currencyToSymbol(this.state.currency)}{trip.getFinalCost()}</b></td>
+                        </tr>
+                        </tfoot>
+                    </table>
                 }
             </div>
         );
@@ -73,7 +77,7 @@ export class TripTable extends React.Component<ITripTableProps, ITripTableState>
 
     private load(props: ITripTableProps): void {
         this.setState({fetching: true});
-        this.props.deals.load().then(() => setTimeout(this.onLoaded.bind(this), 500));
+        this.props.deals.load().then(() => setTimeout(this.onLoaded.bind(this), 250));
     }
 
     private onLoaded() {
@@ -86,7 +90,7 @@ export class TripTable extends React.Component<ITripTableProps, ITripTableState>
         if (trip) {
             this.setState({fetching: false, trip, currency});
         } else {
-            this.setState({fetching: false});
+            this.setState({fetching: false, trip: undefined});
         }
     }
 
@@ -110,5 +114,9 @@ export class TripTable extends React.Component<ITripTableProps, ITripTableState>
 
     private getCurrency() {
         return currencyToSymbol(this.state.currency);
+    }
+
+    private ifNotReady() {
+        return !this.state || this.state.fetching;
     }
 }

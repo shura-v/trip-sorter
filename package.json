@@ -1,6 +1,6 @@
 {
   "name": "trip-sorter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Test task for PropertyFinder",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shura-v/"
+    "url": "git+https://github.com/shura-v/trip-sorter.git"
   },
   "keywords": [
     "test",
