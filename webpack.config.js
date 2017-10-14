@@ -6,6 +6,7 @@ const root = path.resolve(__dirname);
 
 module.exports = {
     entry: [
+        'core-js/fn/promise',
         'whatwg-fetch',
         path.resolve(root, 'app/index.ts')
     ],
