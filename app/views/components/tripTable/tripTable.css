@@ -1,0 +1,19 @@
+.b__trip-icon {
+    margin: auto 5px;
+}
+
+.b__trip-route-info {
+    font-style: italic;
+}
+
+.table tbody td {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.table tfoot td {
+    background-color: #e8e8e8 !important;
+}
+
+.h__fetching {
+    opacity: 0.2;
+}

@@ -1,0 +1,23 @@
+.h__disabled {
+    opacity: 0.5;
+}
+
+body {
+    background: url(index.jpg) top center;
+}
+
+.b__github {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 0;
+    width: 100px;
+    border-top-left-radius: 5px;
+}
+
+.b__github::before {
+    width: 100%;
+    text-align: center;
+    font-size: 72px;
+}
