@@ -8,10 +8,10 @@ Here is some helpful info...
 ``npm test`` - this will run **Mocha** tests once
 
 ## Compiling bundle
-``npm build`` - this will compile a bundle to **dist** folder
+``npm run build`` - this will compile a bundle to **dist** folder
 
 ## Linting
-``npm lint`` - **tslint:recommended** and **tslint-react** slightly modified for my needs
+``npm run lint`` - **tslint:recommended** and **tslint-react** slightly modified for my needs
 
 ## Author
 @shura-v
