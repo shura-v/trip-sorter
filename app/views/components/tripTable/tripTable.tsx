@@ -1,10 +1,10 @@
 import {isEqual} from 'lodash';
-import {IDeal} from '../../../models/deal/i_deal';
 import {IDealsRepository} from '../../../models/dealsRepository/i_dealsRepository';
 import {ITrip} from '../../../models/trip/i_trip';
 import {ITripSorter} from '../../../models/tripSorter/i_tripSorter';
 import {ISearchParams} from '../app/app';
-import {currencyToSymbol, formatDuration, transportNameToIconName} from './helpers';
+import {getDeal} from '../deal/deal';
+import {currencyToSymbol, formatDuration} from './helpers';
 
 interface ITripTableProps {
     searchParams: ISearchParams;
@@ -55,7 +55,8 @@ export class TripTable extends React.Component<ITripTableProps, ITripTableState>
             );
         }
 
-        const deals = this.dealsToJsx(trip.getDeals());
+        const deals = trip.getDeals()
+            .map((deal) => getDeal(deal, this.getCurrency()));
 
         return (
             <div>
@@ -92,24 +93,6 @@ export class TripTable extends React.Component<ITripTableProps, ITripTableState>
         } else {
             this.setState({fetching: false, trip: undefined});
         }
-    }
-
-    private dealsToJsx(deals: IDeal[]): JSX.Element[] {
-        return deals.map((deal) => (
-            <tr key={deal.id}>
-                <td>
-                    <div>
-                        <span>{deal.departure}</span>
-                        <span className={`b__trip-icon mdi mdi-${transportNameToIconName(deal.transport)}`}/>
-                        <span>{deal.arrival}</span>
-                    </div>
-                    <div className="b__trip-route-info small">
-                        <b>{deal.transport}</b> {deal.reference} for {deal.duration.h}:{deal.duration.m}
-                    </div>
-                </td>
-                <td className="text-right">{this.getCurrency()}{deal.finalCost}</td>
-            </tr>
-        ));
     }
 
     private getCurrency() {
