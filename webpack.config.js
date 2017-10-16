@@ -12,7 +12,7 @@ module.exports = {
     ],
     output: {
         path: path.resolve(root, 'dist'),
-        filename: 'bundle.js'
+        filename: 'bundle-[hash].js'
     },
     resolve: {
         modules: [
@@ -68,6 +68,6 @@ module.exports = {
             'React': 'react',
             'ReactDOM': 'react-dom'
         }),
-        new ExtractTextPlugin('styles.css'),
+        new ExtractTextPlugin('styles-[hash].css'),
     ]
 };
